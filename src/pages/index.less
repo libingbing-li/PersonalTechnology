@@ -1,3 +1,32 @@
-.title {
-  background: rgb(121, 242, 157);
+.header {
+  z-index: 2;
+    display: flex;
+    height: 70px;
+    background: #fff;
+    padding: 0 20px;
+    box-shadow: 0px 3px 20px 1px #ddd;
+  .logo {
+    flex: 0 0 130px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-right: 20px;
+  }
+  .menu {
+    flex: 1 1 auto;
+  }
+  .git {
+    flex: 0 0 130px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-left: 20px;
+    font-weight: 700;
+    a {
+      color: #000;
+    }
+    a:link {
+      color: rgb(38, 115, 231);
+    }
+  }
 }
