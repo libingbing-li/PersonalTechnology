@@ -2,6 +2,7 @@ import React from 'react';
 import { history } from 'umi';
 import styles from './index.less';
 import './index.css';
+import './common.css';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
   GithubOutlined,
@@ -32,12 +33,8 @@ class Index extends React.Component {
         </Menu>
         <div className={styles.git} >
           <GithubOutlined 
-            style={{
-              fontSize: '30px',
-              marginRight: '10px',
-            }}
           />
-          <a href="">libingbing-li</a>
+          <a href="https://github.com/libingbing-li">libingbing-li</a>
         </div>
       </Header>
       {this.props.children}

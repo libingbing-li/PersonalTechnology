@@ -9,37 +9,15 @@ const defaultProps = {
   left: 'auto',
   bottom: 'auto',
   right: 'auto',
-  minTop: 0,
-  minLeft: 0,
-  minBottom: 0,
-  minRight: 0, 
   isTop: false,
   isBottom: false,
   isLeft: false,
   isRight: false,
-  isLeftOrRight: true,
+  minTop: 0,
+  minBottom: 0,
+  minLeft: 0,
+  minRight: 0, 
 };
-
-// interface IProps {
-//   onClick: () => void; 
-//   id: string;
-//   cancel: false, //是否添加删除按钮
-//   fx?: number;
-//   fy?: number; //父元素的像素值,默认是整个窗口的可见区域px
-//   top?: string;
-//   left?: string;
-//   bottom?: string;
-//   right?: string; //初始化的控制位置的值px, 默认auto
-//   minTop?: number;
-//   minLeft?: number;
-//   minBottom?: number;
-//   minRight?: number; // 贴边宽高
-//   isTop?: boolean;
-//   isBottom?: boolean;
-//   isLeft?: boolean;
-//   isRight?: boolean; //是否贴边
-//   isLeftOrRight?: boolean; //是否先进行左右的判断
-// };
 
 type IProps = {
   id: string;
@@ -108,34 +86,31 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
         }
       } else {
         // 贴边
-        if(this.props.isLeftOrRight && (this.props.isRight || this.props.isLeft)) {
-          // 左右判断
-          if(this.props.isRight && this.props.isLeft) {
-            // 左右就判断当前倾向哪边
-            if(e.changedTouches[0].clientX < (this.props.fx / 2)) {
-              left = this.props.minLeft;
-            } else {
-              left = this.props.fx - dw - this.props.minRight;
-            }
-          } else if(this.props.isLeft) {
+        // 左右判断
+        if(this.props.isRight && this.props.isLeft) {
+          // 左右就判断当前倾向哪边
+          if(e.changedTouches[0].clientX < (this.props.fx / 2)) {
             left = this.props.minLeft;
-          } else if(this.props.isRight) {
+          } else {
             left = this.props.fx - dw - this.props.minRight;
           }
-        } else {
-          // 上下判断
-          if(this.props.isTop && this.props.isBottom) {
-            // 左右就判断当前倾向哪边
-            if(e.changedTouches[0].clientY < (this.props.fy / 2)) {
-              top = this.props.minTop;
-            } else {
-              top = this.props.fy - dh - this.props.minBottom;
-            }
-          } else if(this.props.isTop) {
+        } else if(this.props.isLeft) {
+          left = this.props.minLeft;
+        } else if(this.props.isRight) {
+          left = this.props.fx - dw - this.props.minRight;
+        }
+        // 上下判断
+        if(this.props.isTop && this.props.isBottom) {
+          // 上下就判断当前倾向哪边
+          if(e.changedTouches[0].clientY < (this.props.fy / 2)) {
             top = this.props.minTop;
-          } else if(this.props.isBottom) {
+          } else {
             top = this.props.fy - dh - this.props.minBottom;
           }
+        } else if(this.props.isTop) {
+          top = this.props.minTop;
+        } else if(this.props.isBottom) {
+          top = this.props.fy - dh - this.props.minBottom;
         }
       }
       index.style.left = left + 'px';
