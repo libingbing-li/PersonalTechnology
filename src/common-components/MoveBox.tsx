@@ -3,10 +3,11 @@ import React from 'react';
 const defaultProps = {
   onClick: () => {},
   cancel: false,
+  style: {},
   fx: document.body.clientWidth,
   fy: document.body.clientHeight,
-  top: 'auto',
-  left: 'auto',
+  top: '0px',
+  left: '0px',
   bottom: 'auto',
   right: 'auto',
   isTop: false,
@@ -31,22 +32,28 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
     // 移动元素的宽高
     const dw: any = document.querySelector(`#moveBox-${this.props.id}`)?.clientWidth;
     const dh: any = document.querySelector(`#moveBox-${this.props.id}`)?.clientHeight;
+
     // 获取手指第一次的坐标
     const index: any = document.querySelector(`#moveBox-${this.props.id}`);
     let indexX = 0;
     let indexY = 0;
+
     // 获取当前的left和top
     let left = index.style.left !== 'auto' 
     ? Number(index.style.left.substring(0,index.style.left.length - 2))
     : this.props.fx - Number(index.style.right.substring(0,index.style.right.length - 2)) - dw; 
+
     let top = index.style.top !== 'auto' 
     ? Number(index.style.top.substring(0,index.style.top.length - 2)) 
     : this.props.fy - Number(index.style.bottom.substring(0,index.style.bottom.length - 2)) - dh;
-    index?.addEventListener('touchstart',(e: any) => {
+
+    console.log('left: ' + left + 'top: ' + top);
+    index.addEventListener('touchstart',(e: any) => {
       indexX = e.changedTouches[0].clientX; //记录手指第一次触碰屏幕的坐标点
       indexY = e.changedTouches[0].clientY;
+      console.log('MoveBox touchstart indexX: ' + indexX + 'indexY: ' + indexY)
     });
-    index?.addEventListener('touchmove', (e: any) => {
+    index.addEventListener('touchmove', (e: any) => {
       // 记录移动的距离
       let x = e.changedTouches[0].clientX - indexX;
       let y = e.changedTouches[0].clientY - indexY;
@@ -66,8 +73,11 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
       }
       index.style.left = left + 'px';
       index.style.top = top + 'px';
+
+
+      console.log('MoveBox touchmove x:' + x + 'y: ' + y + 'left: ' + left + 'top: ' + top)
     });
-    index?.addEventListener('touchend', (e: any) => {
+    index.addEventListener('touchend', (e: any) => {
       let x = e.changedTouches[0].clientX - indexX;
       let y = e.changedTouches[0].clientY - indexY;
       left = left + x;
@@ -115,6 +125,8 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
       }
       index.style.left = left + 'px';
       index.style.top = top + 'px';
+
+      console.log('MoveBox touchend')
     });
   }
 
@@ -129,7 +141,9 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
     return (
       <div 
         id={`moveBox-${this.props.id}`} 
+        onClick={this.props.onClick}
         style={{
+          ...this.props.style,
           position: 'absolute', 
           top: `${this.props.top}`,
           left: `${this.props.left}`, 
