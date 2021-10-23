@@ -32,8 +32,9 @@ class Index extends React.Component {
           <Menu.Item key="components" onClick={() => history.push('/components')}>组件</Menu.Item>
         </Menu>
         <div className={styles.git} >
-          <GithubOutlined 
-          />
+          <a href="https://github.com/libingbing-li/PersonalTechnology">
+          <GithubOutlined />
+          </a>
           <a href="https://github.com/libingbing-li">libingbing-li</a>
         </div>
       </Header>
