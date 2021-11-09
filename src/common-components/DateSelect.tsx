@@ -20,7 +20,6 @@ const defaultProps = {
   time: 0,
 };
 
-
 type IProps = {
   id: string;
   style: any;
@@ -277,7 +276,9 @@ class DateSelect extends React.Component<IProps & typeof defaultProps> {
       >
         <div className={style.show}>
           <LeftOutlined onClick={this.last} />
-          <span onClick={this.select}>{this.state.showStr}</span>
+          <span className={style.title} onClick={this.select}>
+            {this.state.showStr}
+          </span>
           <RightOutlined onClick={this.next} />
         </div>
         <div className={style.select}>

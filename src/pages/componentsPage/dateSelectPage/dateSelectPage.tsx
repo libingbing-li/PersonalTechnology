@@ -64,12 +64,7 @@ class Demo extends React.Component<DIProsp> {
   render() {
     return (
       <div className={styles.demo} id="moveBoxPageDemo">
-        <div className={styles.title}>
-          {this.props.title}
-          <Tooltip title="点击跳转到github">
-            <CodeOutlined />
-          </Tooltip>
-        </div>
+        <div className={styles.title}>{this.props.title}</div>
         <div className={styles.main}>
           <DateSelect
             id={'dateSelectPage' + this.props.type}
@@ -90,7 +85,12 @@ class DateSelectPage extends React.Component {
   render = () => {
     return (
       <div id="dateSelectPage">
-        <Title>DateSelect 日期选择</Title>
+        <Title>
+          DateSelect 日期选择
+          <Tooltip title="点击跳转到github">
+            <CodeOutlined style={{ marginLeft: '15px' }} />
+          </Tooltip>
+        </Title>
         <Paragraph>选择日期的控件。</Paragraph>
         <Paragraph>
           <ul>
