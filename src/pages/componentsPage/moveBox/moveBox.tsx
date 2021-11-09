@@ -1,9 +1,6 @@
 import React from 'react';
 import { Layout, Switch, Table, Tooltip, Typography, Menu } from 'antd';
-import {
-  GithubOutlined,
-  CodeOutlined,
-} from '@ant-design/icons';
+import { GithubOutlined, CodeOutlined } from '@ant-design/icons';
 import styles from './moveBox.less';
 import MoveBox from '@/common-components/MoveBox';
 import { columns } from '../../../data';
@@ -150,15 +147,13 @@ class Demo extends React.Component {
   state: IState = {
     demoCancel: false,
     demo: null,
-  }
+  };
 
   componentDidMount = () => {
     this.setState({
       demo: document.querySelector('#moveBoxPageDemo'),
     });
-  }
-
-
+  };
 
   render() {
     return (
@@ -169,7 +164,10 @@ class Demo extends React.Component {
             <Switch
               style={{ marginLeft: '10px', marginRight: '15px' }}
               checked={this.state.demoCancel}
-              onChange={(checked: boolean) => { console.log(checked); this.setState({ demoCancel: checked }) }}
+              onChange={(checked: boolean) => {
+                console.log(checked);
+                this.setState({ demoCancel: checked });
+              }}
             />
           </span>
           <span>
@@ -177,7 +175,10 @@ class Demo extends React.Component {
             <Switch
               style={{ marginLeft: '10px', marginRight: '15px' }}
               checked={this.state.demoCancel}
-              onChange={(checked: boolean) => { console.log(checked); this.setState({ demoCancel: checked }) }}
+              onChange={(checked: boolean) => {
+                console.log(checked);
+                this.setState({ demoCancel: checked });
+              }}
             />
           </span>
           <span>
@@ -185,7 +186,10 @@ class Demo extends React.Component {
             <Switch
               style={{ marginLeft: '10px', marginRight: '15px' }}
               checked={this.state.demoCancel}
-              onChange={(checked: boolean) => { console.log(checked); this.setState({ demoCancel: checked }) }}
+              onChange={(checked: boolean) => {
+                console.log(checked);
+                this.setState({ demoCancel: checked });
+              }}
             />
           </span>
           <span>
@@ -193,7 +197,10 @@ class Demo extends React.Component {
             <Switch
               style={{ marginLeft: '10px', marginRight: '15px' }}
               checked={this.state.demoCancel}
-              onChange={(checked: boolean) => { console.log(checked); this.setState({ demoCancel: checked }) }}
+              onChange={(checked: boolean) => {
+                console.log(checked);
+                this.setState({ demoCancel: checked });
+              }}
             />
           </span>
           <span>
@@ -201,7 +208,10 @@ class Demo extends React.Component {
             <Switch
               style={{ marginLeft: '10px', marginRight: '15px' }}
               checked={this.state.demoCancel}
-              onChange={(checked: boolean) => { console.log(checked); this.setState({ demoCancel: checked }) }}
+              onChange={(checked: boolean) => {
+                console.log(checked);
+                this.setState({ demoCancel: checked });
+              }}
             />
           </span>
         </div>
@@ -225,11 +235,10 @@ class Demo extends React.Component {
   }
 }
 
-
 class MoveBoxPage extends React.Component {
   render = () => {
     return (
-      <div id='moveBoxPage'>
+      <div id="moveBoxPage">
         <Title>MoveBox 移动盒子</Title>
         <p>可以包裹一个内容，将其在屏幕上随意移动。</p>
         <Title level={2}>演示</Title>
@@ -246,8 +255,7 @@ class MoveBoxPage extends React.Component {
         />
       </div>
     );
-  }
+  };
 }
-
 
 export default MoveBoxPage;

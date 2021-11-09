@@ -5,31 +5,32 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { 
-      path: '/', 
+    {
+      path: '/',
       component: '@/pages/index',
       routes: [
         {
-          path: '/components',
-          component: '@/pages/components/components',
+          path: '/componentsPage',
+          component: '@/pages/componentsPage/componentsPage',
           routes: [
             {
-              path: '/components/confirm',
-              component: '@/pages/components/confirm/confirm.tsx',
+              path: '/componentsPage/confirm',
+              component: '@/pages/componentsPage/confirm/confirm.tsx',
             },
             {
-              path: '/components/moveBox',
-              component: '@/pages/components/moveBox/moveBox.tsx',
+              path: '/componentsPage/moveBox',
+              component: '@/pages/componentsPage/moveBox/moveBox.tsx',
             },
             {
-              path: '/components/slideBox',
-              component: '@/pages/components/slideBox/slideBox.tsx',
+              path: '/componentsPage/slideBox',
+              component: '@/pages/componentsPage/slideBox/slideBox.tsx',
             },
             {
-              path: '/components/dateSelect',
-              component: '@/pages/components/dateSelect/dateSelect.tsx',
+              path: '/componentsPage/dateSelect',
+              component:
+                '@/pages/componentsPage/dateSelectPage/dateSelectPage.tsx',
             },
-          ],          
+          ],
         },
       ],
     },
