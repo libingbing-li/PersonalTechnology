@@ -1,13 +1,12 @@
 import React from 'react';
 import { Layout, Switch, Table, Tooltip, Typography, Menu } from 'antd';
 import { GithubOutlined, CodeOutlined } from '@ant-design/icons';
-import styles from './moveBox.less';
-import MoveBox from '@/common-components/MoveBox';
+import styles from './VerifyPage.less';
 import { columns } from '../../../data';
 import { check } from 'prettier';
 
 const { Header, Content, Sider } = Layout;
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const data: Array<any> = [
   {
@@ -156,91 +155,28 @@ class Demo extends React.Component {
   };
 
   render() {
-    return (
-      <div className={styles.demo} id="moveBoxPageDemo">
-        <div className={styles.switchs}>
-          <span>
-            cancel:
-            <Switch
-              style={{ marginLeft: '10px', marginRight: '15px' }}
-              checked={this.state.demoCancel}
-              onChange={(checked: boolean) => {
-                console.log(checked);
-                this.setState({ demoCancel: checked });
-              }}
-            />
-          </span>
-          <span>
-            cancel:
-            <Switch
-              style={{ marginLeft: '10px', marginRight: '15px' }}
-              checked={this.state.demoCancel}
-              onChange={(checked: boolean) => {
-                console.log(checked);
-                this.setState({ demoCancel: checked });
-              }}
-            />
-          </span>
-          <span>
-            cancel:
-            <Switch
-              style={{ marginLeft: '10px', marginRight: '15px' }}
-              checked={this.state.demoCancel}
-              onChange={(checked: boolean) => {
-                console.log(checked);
-                this.setState({ demoCancel: checked });
-              }}
-            />
-          </span>
-          <span>
-            cancel:
-            <Switch
-              style={{ marginLeft: '10px', marginRight: '15px' }}
-              checked={this.state.demoCancel}
-              onChange={(checked: boolean) => {
-                console.log(checked);
-                this.setState({ demoCancel: checked });
-              }}
-            />
-          </span>
-          <span>
-            cancel:
-            <Switch
-              style={{ marginLeft: '10px', marginRight: '15px' }}
-              checked={this.state.demoCancel}
-              onChange={(checked: boolean) => {
-                console.log(checked);
-                this.setState({ demoCancel: checked });
-              }}
-            />
-          </span>
-        </div>
-        <div className={styles.main}>
-          <MoveBox
-            id="moveBoxPage"
-            // scrollId=""  思路：当移动时将滚动容器的overflow改为hidden
-            onClick={() => console.log('MoveBox click')}
-            fx={500}
-            fy={300}
-            style={{
-              width: '30px',
-              height: '30px',
-              borderRadius: '15px',
-              background: '#000',
-            }}
-          />
-        </div>
-      </div>
-    );
+    return <div className={styles.demo} id="moveBoxPageDemo"></div>;
   }
 }
 
-class MoveBoxPage extends React.Component {
+class VerifyPage extends React.Component {
   render = () => {
     return (
-      <div id="moveBoxPage">
-        <Title>MoveBox 移动盒子</Title>
-        <p>可以包裹一个内容，将其在屏幕上随意移动。</p>
+      <div id="VerifyPage">
+        <Title>
+          Verify 安全验证
+          <Tooltip title="点击跳转到github">
+            <CodeOutlined style={{ marginLeft: '15px' }} />
+          </Tooltip>
+        </Title>
+        <Paragraph>用于安全验证的组件</Paragraph>
+        <Paragraph>
+          <ul>
+            <li>拼图验证</li>
+            <li>验证码验证</li>
+            {/* <li>点击顺序字符验证</li> */}
+          </ul>
+        </Paragraph>
         <Title level={2}>演示</Title>
         <Demo />
         <Title level={2}>API</Title>
@@ -258,4 +194,4 @@ class MoveBoxPage extends React.Component {
   };
 }
 
-export default MoveBoxPage;
+export default VerifyPage;

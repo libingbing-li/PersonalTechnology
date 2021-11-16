@@ -28,9 +28,15 @@ class Components extends React.Component {
             </Menu.Item>
             <Menu.Item
               key="confirm"
-              onClick={() => history.push('/componentsPage/confirm')}
+              onClick={() => history.push('/componentsPage/confirmPage')}
             >
               选择弹出框
+            </Menu.Item>
+            <Menu.Item
+              key="loginVerify"
+              onClick={() => history.push('/componentsPage/VerifyPage')}
+            >
+              登录验证
             </Menu.Item>
           </Menu>
         </Sider>
