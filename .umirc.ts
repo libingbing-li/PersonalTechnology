@@ -15,7 +15,7 @@ export default defineConfig({
           routes: [
             {
               path: '/componentsPage/confirm',
-              component: '@/pages/componentsPage/confirm/confirm.tsx',
+              component: '@/pages/componentsPage/confirmPage/confirmPage.tsx',
             },
             {
               path: '/componentsPage/moveBox',
@@ -26,7 +26,7 @@ export default defineConfig({
               component: '@/pages/componentsPage/slideBox/slideBox.tsx',
             },
             {
-              path: '/componentsPage/dateSelect',
+              path: '/componentsPage/dateSelectPage',
               component:
                 '@/pages/componentsPage/dateSelectPage/dateSelectPage.tsx',
             },
