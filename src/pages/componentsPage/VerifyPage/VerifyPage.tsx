@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, Switch, Table, Tooltip, Typography, Menu } from 'antd';
 import { GithubOutlined, CodeOutlined } from '@ant-design/icons';
-import styles from './VerifyPage.less';
 import style from '../demo.less';
 import { columns } from '../../../data';
 import Verify from '@/common-components/Verify';
@@ -10,27 +9,73 @@ import { check } from 'prettier';
 const { Header, Content, Sider } = Layout;
 const { Title, Paragraph } = Typography;
 
-const data: Array<any> = [];
+const data: Array<any> = [
+  {
+    key: '1',
+    parameter: 'getCodeStr（组件CodeVerify）',
+    description: '获取当前组件显示的验证码字符串',
+    type: '(data: string[]) => void',
+    default: '(data: string[]) =>  console.log(...data)',
+  },
+];
 
 interface IState {
-  demoCancel: boolean;
-  demo: any;
+  codeStr: string;
+  verifyCodeStr: string;
 }
 
 class Demo extends React.Component {
   state: IState = {
-    demoCancel: false,
-    demo: null,
+    codeStr: '',
+    verifyCodeStr: '请重新输入',
   };
 
   componentDidMount = () => {};
+
+  getCodeStr = (data: string[]) => {
+    let str = '';
+    data.forEach((v: string) => {
+      str = str + v;
+    });
+    this.setState({
+      codeStr: str,
+      verifyCodeStr: '请重新输入',
+    });
+  };
+
+  varifyCodeStr = (str: string) => {
+    if (str === this.state.codeStr) {
+      this.setState({
+        verifyCodeStr: '验证成功',
+      });
+    } else {
+      this.setState({
+        verifyCodeStr: '验证失败',
+      });
+    }
+  };
 
   render() {
     return (
       <div className={style.demo}>
         <div className={style.title}>验证码验证——点击刷新</div>
-        <div className={style.main}>
-          <Verify />
+        <div
+          className={style.main}
+          style={{
+            flexDirection: 'column',
+          }}
+        >
+          {/* <Verify /> */}
+          <Verify getCodeStr={(data: string[]) => this.getCodeStr(data)} />
+          <input
+            type="text"
+            style={{ margin: '20px' }}
+            spellCheck={false}
+            onChange={(v) => {
+              this.varifyCodeStr(v.target.value);
+            }}
+          />
+          <div>{this.state.verifyCodeStr}</div>
         </div>
       </div>
     );

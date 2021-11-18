@@ -54,14 +54,14 @@ const data: Array<any> = [
     key: '6',
     parameter: 'confirm',
     description: '确认函数',
-    type: '() => {}',
+    type: '() => void',
     default: '() => { console.log("confirm");}',
   },
   {
     key: '7',
     parameter: 'cancel',
     description: '取消函数',
-    type: '() => {}',
+    type: '() => void',
     default: '() => { console.log("cancel");}',
   },
   {
@@ -75,7 +75,7 @@ const data: Array<any> = [
     key: '9',
     parameter: 'close',
     description: '关闭选择框按钮对应函数',
-    type: '() => {}',
+    type: '() => void',
     default: '() => {}',
   },
   {
