@@ -110,7 +110,7 @@ class Demo extends React.Component {
   render() {
     return (
       <div>
-        <div className={styles.demo} id="moveBoxPageDemo">
+        <div className={styles.demo}>
           <div className={styles.title}>选择框</div>
           <div
             className={styles.main}
@@ -131,7 +131,7 @@ class Demo extends React.Component {
             <button onClick={this.confirmShow}>自定义按钮</button>
           </div>
         </div>
-        <div className={styles.demo} id="moveBoxPageDemo">
+        <div className={styles.demo}>
           <div className={styles.title}>选择框+按钮+遮罩层</div>
           <div
             className={styles.main}

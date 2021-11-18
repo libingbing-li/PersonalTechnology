@@ -63,7 +63,7 @@ class Demo extends React.Component<DIProsp> {
 
   render() {
     return (
-      <div className={styles.demo} id="moveBoxPageDemo">
+      <div className={styles.demo}>
         <div className={styles.title}>{this.props.title}</div>
         <div className={styles.main}>
           <DateSelect
