@@ -108,7 +108,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     isMoveable: false,
     tipsIndex: 0,
   };
-  refs: any;
+  // refs: any;
 
   componentWillMount = () => {
     this.renderImage();
@@ -130,6 +130,8 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     objImage.addEventListener('load', () => {
       const { imageWidth, imageHeight, fragmentSize } = this.props;
       // 获取对应canvas的ctx画笔
+      const shadow = document.querySelector('#shadow');
+      console.log(shadow);
       const ctxShadow = this.refs.shadowCanvas.getContext('2d');
       const ctxFragment = this.refs.fragmentCanvas.getContext('2d');
 
@@ -307,6 +309,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
           >
             {/* 拼图底部的阴影 */}
             <canvas
+              id="shadow"
               ref="shadowCanvas"
               className={style.canvas}
               width={fragmentSize}
