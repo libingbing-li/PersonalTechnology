@@ -3,7 +3,8 @@ import { Layout, Switch, Table, Tooltip, Typography, Menu } from 'antd';
 import { GithubOutlined, CodeOutlined } from '@ant-design/icons';
 import style from '../demo.less';
 import { columns } from '../../../data';
-import Verify from '@/common-components/Verify';
+import VerifyCode from '@/common-components/VerifyCode';
+import VerifyImage from '@/common-components/VerifyImage';
 import { check } from 'prettier';
 
 const { Header, Content, Sider } = Layout;
@@ -57,25 +58,39 @@ class Demo extends React.Component {
 
   render() {
     return (
-      <div className={style.demo}>
-        <div className={style.title}>验证码验证——点击刷新</div>
-        <div
-          className={style.main}
-          style={{
-            flexDirection: 'column',
-          }}
-        >
-          {/* <Verify /> */}
-          <Verify getCodeStr={(data: string[]) => this.getCodeStr(data)} />
-          <input
-            type="text"
-            style={{ margin: '20px' }}
-            spellCheck={false}
-            onChange={(v) => {
-              this.varifyCodeStr(v.target.value);
+      <div>
+        <div className={style.demo}>
+          <div className={style.title}>验证码验证——点击刷新</div>
+          <div
+            className={style.main}
+            style={{
+              flexDirection: 'column',
             }}
-          />
-          <div>{this.state.verifyCodeStr}</div>
+          >
+            <VerifyCode
+              getCodeStr={(data: string[]) => this.getCodeStr(data)}
+            />
+            <input
+              type="text"
+              style={{ margin: '20px' }}
+              spellCheck={false}
+              onChange={(v) => {
+                this.varifyCodeStr(v.target.value);
+              }}
+            />
+            <div>{this.state.verifyCodeStr}</div>
+          </div>
+        </div>
+        <div className={style.demo}>
+          <div className={style.title}>拼图验证</div>
+          <div
+            className={style.main}
+            style={{
+              flexDirection: 'column',
+            }}
+          >
+            <VerifyImage />
+          </div>
         </div>
       </div>
     );

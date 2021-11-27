@@ -24,7 +24,7 @@ type IProps = {
   id: string;
   style: any;
   returnTime: (year: number, month: number, date: number) => void;
-} & Partial<typeof defaultProps>; //等同于上述注释的部分
+} & Partial<typeof defaultProps>;
 
 interface IState {
   showStr: string;
