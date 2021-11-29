@@ -28,27 +28,6 @@
 
 // verifyImage
 .imageCode {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  .imageCover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000;
-    opacity: 0.5;
-    user-select: none;
-  }
   .imageModal {
     position: relative;
     padding: 10px;
@@ -71,6 +50,7 @@
     margin-top: 10px;
     height: 42px;
     .sliderBar {
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;

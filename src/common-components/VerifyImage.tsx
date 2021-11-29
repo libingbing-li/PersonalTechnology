@@ -7,6 +7,9 @@ const STATUS_READY = 1; // 图片渲染完成,可以开始滑动
 const STATUS_MATCH = 2; // 图片位置匹配成功
 const STATUS_ERROR = 3; // 图片位置匹配失败
 
+const IMG_W = 250;
+const IMG_H = 150;
+
 // 随机绘制拼图块
 function createClipPath(ctx: any, size = 100, styleIndex = 0) {
   // 0 1 决定 canvas.arc 顺逆时针绘图 0=false=顺 1=true=逆
@@ -61,14 +64,11 @@ function createClipPath(ctx: any, size = 100, styleIndex = 0) {
 }
 
 const defaultProps = {
-  show: true, //是否展示
-  imageUrl: '../assets/verifyImage.jpg', //拼图图片链接
-  imageWidth: 250, //宽
-  imageHeight: 150, //长
+  imageUrl:
+    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=185932774,961636353&fm=26&gp=0.jpg', //拼图图片链接
+  imageWidth: IMG_W, //宽
+  imageHeight: IMG_H, //长
   fragmentSize: 40, //一个拼图块的大小
-  onClose: () => {
-    console.log('close');
-  }, //关闭
   onReload: () => {
     console.log('reload');
   }, //重新加载一个新的拼图,用父组件给的方法
@@ -110,12 +110,74 @@ class ImgVerify extends React.Component<typeof defaultProps> {
   };
   // refs: any;
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.renderImage();
+    this.sliderEvent();
   };
 
   componentWillReceiveProps = () => {
     this.onReload();
+  };
+
+  // pc-为按钮添加鼠标按住移动事件
+  sliderEvent = () => {
+    const btn = document.querySelector('#sliderBtn');
+    const slider = document.querySelector('#sliderWrpper');
+    btn?.addEventListener('mousedown', (e: any) => {
+      // this.onMoveStart(e)
+      if (this.state.status !== STATUS_READY) {
+        return;
+      }
+      console.log(e);
+      // 记录滑动开始的绝对坐标
+      this.setState({ isMoveable: true, startX: e.clientX });
+      slider?.addEventListener('mousemove', (e: any) => {
+        // this.onMoving(e);
+        if (this.state.status !== STATUS_READY || !this.state.isMoveable) {
+          return;
+        }
+
+        const distance = e.clientX - this.state.startX; //clientX: 鼠标相对于当前窗口的x坐标
+        let currX = this.state.oldX + distance;
+
+        const minX = 0;
+        const maxX = this.props.imageWidth - this.props.fragmentSize;
+        currX = currX < minX ? 0 : currX > maxX ? maxX : currX;
+        this.setState({ currX });
+      });
+      btn?.addEventListener('mouseup', (e) => {
+        // this.onMoveEnd()
+        if (this.state.status !== STATUS_READY || !this.state.isMoveable) {
+          return;
+        }
+        // 将旧的固定坐标更新
+        this.setState((state: any) => {
+          return {
+            isMoveable: false,
+            oldX: state.currX,
+          };
+        });
+
+        // 判断拼图是否成功 abs: 返回数的绝对值
+        const isMatch = Math.abs(this.state.currX - this.state.offsetX) < 5;
+        if (isMatch) {
+          this.setState((state: any) => {
+            return {
+              status: STATUS_MATCH,
+              currX: state.offsetX,
+            };
+          });
+          setTimeout(this.props.onMatch, 1000);
+        } else {
+          this.setState((state: any) => {
+            return {
+              status: STATUS_ERROR,
+            };
+          }, this.onReset);
+          this.props.onError();
+        }
+      });
+    });
   };
 
   // 渲染
@@ -130,31 +192,33 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     objImage.addEventListener('load', () => {
       const { imageWidth, imageHeight, fragmentSize } = this.props;
       // 获取对应canvas的ctx画笔
-      const shadow = document.querySelector('#shadow');
-      console.log(shadow);
-      const ctxShadow = this.refs.shadowCanvas.getContext('2d');
-      const ctxFragment = this.refs.fragmentCanvas.getContext('2d');
+      const shadowCanvas: any = document.querySelector('#shadowCanvas');
+      const fragmentCanvas: any = document.querySelector('#fragmentCanvas');
+      const ctxShadow = shadowCanvas.getContext('2d');
+      const ctxFragment = fragmentCanvas.getContext('2d');
 
       // 两个ctx都拥有同样的剪裁路径,也就是一样的拼图模块
       const styleIndex = Math.floor(Math.random() * 16); //16: 随机路径中16个选择
-      createClipPath(ctxFragment, fragmentSize, styleIndex);
+      createClipPath(ctxFragment, fragmentSize, styleIndex); //随机绘制拼图块
       createClipPath(ctxShadow, fragmentSize, styleIndex);
 
       // 随机生成剪裁图片的开始坐标
       // x轴有两个片段, y轴有一个片段
       const clipX = Math.floor(
         fragmentSize + (imageWidth - 2 * fragmentSize) * Math.random(),
-      ); // 1-70
+      ); // 1-70(x最大为拼图在最后)
       const clipY = Math.floor((imageHeight - fragmentSize) * Math.random());
 
       // fragmentCanvas绘制 被剪裁 的部分
-      //drawImage objImage: 用来截图的图像,clipXY: obj上截取的坐标, 要剪裁的宽高, 在画布上放置剪裁好的图形的位置, 要使用的宽高(伸展缩小图像)
+      /*
+      drawImage在画布上绘制图片 drawImage(img-使用的图像, sx-开始剪裁的x, sy, sw-被剪切图像的宽度, sh, x-在画布上放置的坐标, y, width-要使用的图像的宽度-用于缩放等, height)
+      */
       ctxFragment.drawImage(
         objImage,
-        clipX * (objImage.width / 250),
-        clipY * (objImage.height / 150),
-        fragmentSize * (objImage.width / 250),
-        fragmentSize * (objImage.height / 150),
+        clipX * (objImage.width / IMG_W),
+        clipY * (objImage.height / IMG_H),
+        fragmentSize * (objImage.width / IMG_W),
+        fragmentSize * (objImage.height / IMG_H),
         0,
         0,
         fragmentSize,
@@ -190,8 +254,10 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     ) {
       return;
     }
-    const ctxShadow = this.refs.shadowCanvas.getContext('2d');
-    const ctxFragment = this.refs.fragmentCanvas.getContext('2d');
+    const shadowCanvas: any = document.querySelector('#shadowCanvas');
+    const fragmentCanvas: any = document.querySelector('#fragmentCanvas');
+    const ctxShadow = shadowCanvas.getContext('2d');
+    const ctxFragment = fragmentCanvas.getContext('2d');
 
     // 清空画布
     ctxShadow.clearRect(0, 0, this.props.fragmentSize, this.props.fragmentSize);
@@ -222,12 +288,11 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     if (this.state.status !== STATUS_READY) {
       return;
     }
-    console.log(e);
     // 记录滑动开始的绝对坐标
     this.setState({ isMoveable: true, startX: e.changedTouches[0].clientX });
   };
 
-  // 只要鼠标(手指)仍然在元素上,就随时更新当前的x坐标
+  // 只要手指仍然在元素上,就随时更新当前的x坐标
   onMoving = (e: any) => {
     // 图片未加载完成/当前不允许滑动
     if (this.state.status !== STATUS_READY || !this.state.isMoveable) {
@@ -271,7 +336,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
           status: STATUS_ERROR,
         };
       }, this.onReset);
-      // this.props.onError();
+      this.props.onError();
     }
   };
 
@@ -289,28 +354,23 @@ class ImgVerify extends React.Component<typeof defaultProps> {
   };
 
   render() {
-    const { fragmentSize, show } = this.props;
+    const { fragmentSize } = this.props;
     const { imageUrl, offsetX, offsetY, currX, status } = this.state;
 
     return (
-      <div
-        className={style.imageCode}
-        style={{ display: show ? 'flex' : 'none' }}
-      >
-        <div className={style.imageCover} onClick={this.props.onClose}></div>
+      <div className={style.imageCode}>
         <div className={style.imageModal}>
           {/* 图片打底 */}
           <div
             className={style.imageContainer}
             style={{
               backgroundImage: `url("${imageUrl}")`,
-              backgroundSize: '250px 150px',
+              backgroundSize: `${IMG_W}px ${IMG_H}px`,
             }}
           >
             {/* 拼图底部的阴影 */}
             <canvas
-              id="shadow"
-              ref="shadowCanvas"
+              id="shadowCanvas"
               className={style.canvas}
               width={fragmentSize}
               height={fragmentSize}
@@ -321,7 +381,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
             ></canvas>
             {/* 用于移动的拼图 */}
             <canvas
-              ref="fragmentCanvas"
+              id="fragmentCanvas"
               className={style.canvas}
               width={fragmentSize}
               height={fragmentSize}
@@ -333,15 +393,21 @@ class ImgVerify extends React.Component<typeof defaultProps> {
           </div>
           {/* 拉动条 */}
           <div
+            id="sliderWrpper"
             className={
               status == STATUS_MATCH
                 ? `${style.sliderWrpper} ${style.sliderWrpperSuccess}`
                 : `${style.sliderWrpper}`
             }
-            onTouchMove={this.onMoving} //移动到元素上触发
+            onTouchMove={this.onMoving} //移动端-移动到元素上触发
             // onTouchEnd={this.onMoveEnd} //移出元素时触发
           >
-            <div className={style.sliderBar}>
+            <div
+              className={style.sliderBar}
+              onClick={() => {
+                if (status == STATUS_MATCH) this.onReset();
+              }}
+            >
               <CheckOutlined
                 style={{
                   display: status == STATUS_MATCH ? 'inline' : 'none',
@@ -351,8 +417,8 @@ class ImgVerify extends React.Component<typeof defaultProps> {
                 }}
               />
               {status == STATUS_MATCH
-                ? '验证成功,发送验证码'
-                : '完成拼图,发送验证码'}
+                ? '验证成功,点击重来'
+                : '拖动按钮完成拼图'}
             </div>
             <div
               className={style.sliderButtonBox}
@@ -367,9 +433,10 @@ class ImgVerify extends React.Component<typeof defaultProps> {
               }}
             >
               <div
+                id="sliderBtn"
                 className={style.sliderButton}
-                onTouchStart={this.onMoveStart} //按下鼠标触发
-                onTouchEnd={this.onMoveEnd} //松开鼠标触发
+                onTouchStart={this.onMoveStart} //按下手指触发
+                onTouchEnd={this.onMoveEnd} //松开手指触发
                 style={{
                   left: currX - 2 + 'px',
                   background: status == STATUS_ERROR ? '#ff8186' : '#fff',
@@ -402,7 +469,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
 export default ImgVerify;
 
 // 使用
-/* 
+/*
 <ImgVerify
   show={this.state.verifyShow}  //是否显示
   onClose={this.verifyClose} //关闭

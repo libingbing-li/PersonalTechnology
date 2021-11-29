@@ -69,15 +69,17 @@ class ConfirmBtn extends React.Component<IProps & typeof defaultProps> {
       <div className={style.confirmBtn}>
         <Confirm
           id={`btn-${this.props.id}`}
-          closeIcon={true}
-          close={this.confirmShow}
           confirm={this.confirm}
           cancel={this.cancel}
           style={{
             display: 'none',
           }}
         />
-        <div className={style.back} style={{ display: this.state.back }}></div>
+        <div
+          className={style.back}
+          style={{ display: this.state.back }}
+          onClick={this.confirmShow}
+        ></div>
         <button className={style.btn} onClick={this.confirmShow}>
           {this.props.btnStr}
         </button>
