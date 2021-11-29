@@ -10,13 +10,50 @@ import { check } from 'prettier';
 const { Header, Content, Sider } = Layout;
 const { Title, Paragraph } = Typography;
 
-const data: Array<any> = [
+const dataCode: Array<any> = [
   {
     key: '1',
-    parameter: 'getCodeStr（组件CodeVerify）',
+    parameter: 'getCodeStr',
     description: '获取当前组件显示的验证码字符串',
     type: '(data: string[]) => void',
     default: '(data: string[]) =>  console.log(...data)',
+  },
+];
+const dataImg: Array<any> = [
+  {
+    key: '1',
+    parameter: 'imageWidth',
+    description: '图片宽度',
+    type: 'number',
+    default: '250',
+  },
+  {
+    key: '2',
+    parameter: 'imageHeight',
+    description: '图片高度',
+    type: 'string',
+    default: '150',
+  },
+  {
+    key: '3',
+    parameter: 'fragmentSize',
+    description: '拼图块的边长',
+    type: 'number',
+    default: '40',
+  },
+  {
+    key: '4',
+    parameter: 'onMatch',
+    description: '成功的回调',
+    type: '() => void',
+    default: '() => { console.log("match") }',
+  },
+  {
+    key: '5',
+    parameter: 'onError',
+    description: '失败的回调',
+    type: '() => void',
+    default: '() => { console.log("error") }',
   },
 ];
 
@@ -117,12 +154,24 @@ class VerifyPage extends React.Component {
         <Title level={2}>演示</Title>
         <Demo />
         <Title level={2}>API</Title>
+        <Title level={5}>验证码验证</Title>
         <Table
           scroll={{
             x: true,
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={dataCode}
+          bordered={true}
+          pagination={false}
+        />
+        <br />
+        <Title level={5}>拼图验证</Title>
+        <Table
+          scroll={{
+            x: true,
+          }}
+          columns={columns}
+          dataSource={dataImg}
           bordered={true}
           pagination={false}
         />

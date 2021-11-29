@@ -10,6 +10,15 @@ const STATUS_ERROR = 3; // 图片位置匹配失败
 const IMG_W = 250;
 const IMG_H = 150;
 
+const imgSrcArr: string[] = [
+  'https://t7.baidu.com/it/u=737555197,308540855&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=963301259,1982396977&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1297102096,3476971300&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=3655946603,4193416998&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=12235476,3874255656&fm=193&f=GIF',
+  'https://t7.baidu.com/it/u=1032479594,2383177859&fm=193&f=GIF',
+];
+
 // 随机绘制拼图块
 function createClipPath(ctx: any, size = 100, styleIndex = 0) {
   // 0 1 决定 canvas.arc 顺逆时针绘图 0=false=顺 1=true=逆
@@ -64,20 +73,15 @@ function createClipPath(ctx: any, size = 100, styleIndex = 0) {
 }
 
 const defaultProps = {
-  imageUrl:
-    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=185932774,961636353&fm=26&gp=0.jpg', //拼图图片链接
   imageWidth: IMG_W, //宽
   imageHeight: IMG_H, //长
   fragmentSize: 40, //一个拼图块的大小
-  onReload: () => {
-    console.log('reload');
-  }, //重新加载一个新的拼图,用父组件给的方法
   onMatch: () => {
     console.log('match');
   }, //成功的回调
   onError: () => {
     console.log('error');
-  }, //拼错的回调
+  }, //失败的回调
 };
 
 interface IState {
@@ -96,8 +100,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
   // 默认props
   static defaultProps = defaultProps;
   state: IState = {
-    imageUrl:
-      'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=185932774,961636353&fm=26&gp=0.jpg',
+    imageUrl: imgSrcArr[0],
     status: STATUS_LOADING, //图片当前的状态: 加载中,渲染完成,位置匹配成功/失败
     offsetX: 0, //图片截取的x
     offsetY: 0, //图片截取的y
@@ -115,9 +118,9 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     this.sliderEvent();
   };
 
-  componentWillReceiveProps = () => {
-    this.onReload();
-  };
+  // componentWillReceiveProps = () => {
+  //   this.onReload();
+  // };
 
   // pc-为按钮添加鼠标按住移动事件
   sliderEvent = () => {
@@ -128,7 +131,6 @@ class ImgVerify extends React.Component<typeof defaultProps> {
       if (this.state.status !== STATUS_READY) {
         return;
       }
-      console.log(e);
       // 记录滑动开始的绝对坐标
       this.setState({ isMoveable: true, startX: e.clientX });
       slider?.addEventListener('mousemove', (e: any) => {
@@ -215,10 +217,10 @@ class ImgVerify extends React.Component<typeof defaultProps> {
       */
       ctxFragment.drawImage(
         objImage,
-        clipX * (objImage.width / IMG_W),
-        clipY * (objImage.height / IMG_H),
-        fragmentSize * (objImage.width / IMG_W),
-        fragmentSize * (objImage.height / IMG_H),
+        clipX * (objImage.width / this.props.imageWidth),
+        clipY * (objImage.height / this.props.imageHeight),
+        fragmentSize * (objImage.width / this.props.imageWidth),
+        fragmentSize * (objImage.height / this.props.imageHeight),
         0,
         0,
         fragmentSize,
@@ -269,8 +271,10 @@ class ImgVerify extends React.Component<typeof defaultProps> {
     );
 
     // setState(updater, [callback]);
+    const index = Math.floor(Math.random() * 6);
     this.setState(
       {
+        imageUrl: imgSrcArr[index],
         isMoveable: false,
         offsetX: 0, //图片截取的x
         offsetY: 0, //图片截取的y
@@ -365,7 +369,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
             className={style.imageContainer}
             style={{
               backgroundImage: `url("${imageUrl}")`,
-              backgroundSize: `${IMG_W}px ${IMG_H}px`,
+              backgroundSize: `${this.props.imageWidth}px ${this.props.imageHeight}px`,
             }}
           >
             {/* 拼图底部的阴影 */}
@@ -405,7 +409,7 @@ class ImgVerify extends React.Component<typeof defaultProps> {
             <div
               className={style.sliderBar}
               onClick={() => {
-                if (status == STATUS_MATCH) this.onReset();
+                if (status == STATUS_MATCH) this.onReload();
               }}
             >
               <CheckOutlined
