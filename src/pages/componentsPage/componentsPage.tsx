@@ -1,6 +1,6 @@
 import React from 'react';
 import { history } from 'umi';
-import styles from './componentsPage.less';
+import styles from './styles/componentsPage.less';
 import { Layout, Menu } from 'antd';
 import { PROPERTY_TYPES } from '@babel/types';
 
@@ -34,13 +34,21 @@ class Components extends React.Component {
             </Menu.Item>
             <Menu.Item
               key="loginVerify"
-              onClick={() => history.push('/componentsPage/VerifyPage')}
+              onClick={() => history.push('/componentsPage/verifyPage')}
             >
               登录验证
             </Menu.Item>
+            <Menu.Item
+              key="movebox"
+              onClick={() => history.push('/componentsPage/moveBoxPage')}
+            >
+              移动盒子
+            </Menu.Item>
           </Menu>
         </Sider>
-        <Content className={styles.main}>{this.props.children}</Content>
+        <Content className={styles.main} id="componentsPageMain">
+          {this.props.children}
+        </Content>
       </Layout>
     );
   };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout, Switch, Table, Tooltip, Typography, Menu } from 'antd';
 import { GithubOutlined, CodeOutlined } from '@ant-design/icons';
-import style from '../demo.less';
-import { columns } from '../../../data';
+import style from './styles/demo.less';
+import { columns } from '../../data';
 import VerifyCode from '@/common-components/VerifyCode';
 import VerifyImage from '@/common-components/VerifyImage';
 import { check } from 'prettier';

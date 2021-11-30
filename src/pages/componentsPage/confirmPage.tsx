@@ -6,10 +6,10 @@ import {
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import styles from '../demo.less';
+import styles from './styles/demo.less';
 import Confirm from '@/common-components/Confirm';
 import ConfirmBtn from '@/common-components/ConfirmBtn';
-import { columns } from '../../../data';
+import { columns } from '../../data';
 
 const { Header, Content, Sider } = Layout;
 const { Title, Paragraph } = Typography;

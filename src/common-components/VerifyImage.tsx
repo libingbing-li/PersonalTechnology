@@ -471,13 +471,3 @@ class ImgVerify extends React.Component<typeof defaultProps> {
 }
 
 export default ImgVerify;
-
-// 使用
-/*
-<ImgVerify
-  show={this.state.verifyShow}  //是否显示
-  onClose={this.verifyClose} //关闭
-  onMatch={this.verifySuccess} //拼图成功后的回调函数
-></ImgVerify>
-
-*/

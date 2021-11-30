@@ -6,9 +6,9 @@ import {
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import styles from '../demo.less';
+import styles from './styles/demo.less';
 import DateSelect from '@/common-components/DateSelect';
-import { columns } from '../../../data';
+import { columns } from '../../data';
 
 const { Header, Content, Sider } = Layout;
 const { Title, Paragraph } = Typography;

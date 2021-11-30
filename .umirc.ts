@@ -15,16 +15,19 @@ export default defineConfig({
           routes: [
             {
               path: '/componentsPage/dateSelectPage',
-              component:
-                '@/pages/componentsPage/dateSelectPage/dateSelectPage.tsx',
+              component: '@/pages/componentsPage/dateSelectPage.tsx',
             },
             {
               path: '/componentsPage/confirmPage',
-              component: '@/pages/componentsPage/confirmPage/confirmPage.tsx',
+              component: '@/pages/componentsPage/confirmPage.tsx',
             },
             {
-              path: '/componentsPage/VerifyPage',
-              component: '@/pages/componentsPage/VerifyPage/VerifyPage.tsx',
+              path: '/componentsPage/verifyPage',
+              component: '@/pages/componentsPage/verifyPage.tsx',
+            },
+            {
+              path: '/componentsPage/moveBoxPage',
+              component: '@/pages/componentsPage/moveBoxPage.tsx',
             },
           ],
         },
