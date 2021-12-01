@@ -1,11 +1,10 @@
 import React from 'react';
 
 const defaultProps = {
-  onClick: () => {},
-  cancel: false,
   style: {},
-  fx: document.body.clientWidth,
-  fy: document.body.clientHeight,
+  scrollBox: null,
+  fw: document.body.clientWidth,
+  fh: document.body.clientHeight,
   top: '0px',
   left: '0px',
   bottom: 'auto',
@@ -22,7 +21,7 @@ const defaultProps = {
 
 type IProps = {
   id: string;
-  scrollBox: any;
+  scrollBox?: any;
 } & Partial<typeof defaultProps>; //等同于上述注释的部分
 
 class MoveBox extends React.Component<IProps & typeof defaultProps> {
@@ -46,27 +45,136 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
     let left =
       index.style.left !== 'auto'
         ? Number(index.style.left.substring(0, index.style.left.length - 2))
-        : this.props.fx -
+        : this.props.fw -
           Number(index.style.right.substring(0, index.style.right.length - 2)) -
           dw;
 
     let top =
       index.style.top !== 'auto'
         ? Number(index.style.top.substring(0, index.style.top.length - 2))
-        : this.props.fy -
+        : this.props.fh -
           Number(
             index.style.bottom.substring(0, index.style.bottom.length - 2),
           ) -
           dh;
 
-    console.log('left: ' + left + 'top: ' + top);
+    // console.log('left: ' + left + 'top: ' + top);
+
+    // pc端鼠标滑动
+    index.addEventListener('mousedown', (e: any) => {
+      indexX = e.clientX; //记录手指第一次触碰屏幕的坐标点
+      indexY = e.clientY;
+      if (this.props.scrollBox) {
+        this.props.scrollBox.style.overflowY = 'hidden'; //针对本项目，在移动盒子的时候禁止容器滚动
+      }
+      // console.log('MoveBox mousedown indexX: ' + indexX + 'indexY: ' + indexY);
+      const mousemoveFun = (e: any) => {
+        // 记录移动的距离
+        let x = e.clientX - indexX;
+        let y = e.clientY - indexY;
+        indexX = e.clientX;
+        indexY = e.clientY;
+        left = left + x;
+        top = top + y;
+        if (left < this.props.minLeft) {
+          left = this.props.minLeft;
+        } else if (this.props.fw - left - dw < this.props.minRight) {
+          left = this.props.fw - dw - this.props.minRight;
+        }
+        if (top < this.props.minTop) {
+          top = this.props.minTop;
+        } else if (this.props.fh - top - dh < this.props.minBottom) {
+          top = this.props.fh - dh - this.props.minBottom;
+        }
+        index.style.left = left + 'px';
+        index.style.top = top + 'px';
+
+        // console.log(
+        //   'MoveBox touchmove x:' +
+        //     x +
+        //     'y: ' +
+        //     y +
+        //     'left: ' +
+        //     left +
+        //     'top: ' +
+        //     top,
+        // );
+      };
+      const body = document.querySelector('body');
+      body?.addEventListener('mousemove', mousemoveFun);
+      const mouseupFun = (e: any) => {
+        let x = e.clientX - indexX;
+        let y = e.clientY - indexY;
+        left = left + x;
+        top = top + y;
+        // 没有贴边
+        if (
+          !this.props.isTop &&
+          !this.props.isBottom &&
+          !this.props.isLeft &&
+          !this.props.isRight
+        ) {
+          if (left < this.props.minLeft) {
+            left = this.props.minLeft;
+          } else if (this.props.fw - left - dw < this.props.minRight) {
+            left = this.props.fw - dw - this.props.minRight;
+          }
+          if (top < this.props.minTop) {
+            top = this.props.minTop;
+          } else if (this.props.fh - top - dh < this.props.minBottom) {
+            top = this.props.fh - dh - this.props.minBottom;
+          }
+        } else {
+          // 贴边
+          // 左右判断
+          if (this.props.isRight && this.props.isLeft) {
+            // 左右就判断当前倾向哪边
+            if (e.changedTouches[0].clientX < this.props.fw / 2) {
+              left = this.props.minLeft;
+            } else {
+              left = this.props.fw - dw - this.props.minRight;
+            }
+          } else if (this.props.isLeft) {
+            left = this.props.minLeft;
+          } else if (this.props.isRight) {
+            left = this.props.fw - dw - this.props.minRight;
+          }
+          // 上下判断
+          if (this.props.isTop && this.props.isBottom) {
+            // 上下就判断当前倾向哪边
+            if (e.changedTouches[0].clientY < this.props.fh / 2) {
+              top = this.props.minTop;
+            } else {
+              top = this.props.fh - dh - this.props.minBottom;
+            }
+          } else if (this.props.isTop) {
+            top = this.props.minTop;
+          } else if (this.props.isBottom) {
+            top = this.props.fh - dh - this.props.minBottom;
+          }
+        }
+        index.style.left = left + 'px';
+        index.style.top = top + 'px';
+
+        if (this.props.scrollBox) {
+          this.props.scrollBox.style.overflowY = 'scroll'; //针对本项目，在移动盒子结束的时候恢复容器滚动
+        }
+        // console.log('MoveBox mouseup');
+        // 清除事件
+        body?.removeEventListener('mousemove', mousemoveFun);
+        body?.removeEventListener('mouseu', mouseupFun);
+      };
+      body?.addEventListener('mouseup', mouseupFun);
+    });
+
+    // 移动端手指滑动
     index.addEventListener('touchstart', (e: any) => {
       indexX = e.changedTouches[0].clientX; //记录手指第一次触碰屏幕的坐标点
       indexY = e.changedTouches[0].clientY;
       if (this.props.scrollBox) {
         this.props.scrollBox.style.overflowY = 'hidden'; //针对本项目，在移动盒子的时候禁止容器滚动
       }
-      console.log('MoveBox touchstart indexX: ' + indexX + 'indexY: ' + indexY);
+      // console.log('MoveBox touchstart indexX: ' + indexX + 'indexY: ' + indexY);
     });
     index.addEventListener('touchmove', (e: any) => {
       // 记录移动的距离
@@ -78,27 +186,27 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
       top = top + y;
       if (left < this.props.minLeft) {
         left = this.props.minLeft;
-      } else if (this.props.fx - left - dw < this.props.minRight) {
-        left = this.props.fx - dw - this.props.minRight;
+      } else if (this.props.fw - left - dw < this.props.minRight) {
+        left = this.props.fw - dw - this.props.minRight;
       }
       if (top < this.props.minTop) {
         top = this.props.minTop;
-      } else if (this.props.fy - top - dh < this.props.minBottom) {
-        top = this.props.fy - dh - this.props.minBottom;
+      } else if (this.props.fh - top - dh < this.props.minBottom) {
+        top = this.props.fh - dh - this.props.minBottom;
       }
       index.style.left = left + 'px';
       index.style.top = top + 'px';
 
-      console.log(
-        'MoveBox touchmove x:' +
-          x +
-          'y: ' +
-          y +
-          'left: ' +
-          left +
-          'top: ' +
-          top,
-      );
+      // console.log(
+      //   'MoveBox touchmove x:' +
+      //     x +
+      //     'y: ' +
+      //     y +
+      //     'left: ' +
+      //     left +
+      //     'top: ' +
+      //     top,
+      // );
     });
     index.addEventListener('touchend', (e: any) => {
       let x = e.changedTouches[0].clientX - indexX;
@@ -114,41 +222,41 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
       ) {
         if (left < this.props.minLeft) {
           left = this.props.minLeft;
-        } else if (this.props.fx - left - dw < this.props.minRight) {
-          left = this.props.fx - dw - this.props.minRight;
+        } else if (this.props.fw - left - dw < this.props.minRight) {
+          left = this.props.fw - dw - this.props.minRight;
         }
         if (top < this.props.minTop) {
           top = this.props.minTop;
-        } else if (this.props.fy - top - dh < this.props.minBottom) {
-          top = this.props.fy - dh - this.props.minBottom;
+        } else if (this.props.fh - top - dh < this.props.minBottom) {
+          top = this.props.fh - dh - this.props.minBottom;
         }
       } else {
         // 贴边
         // 左右判断
         if (this.props.isRight && this.props.isLeft) {
           // 左右就判断当前倾向哪边
-          if (e.changedTouches[0].clientX < this.props.fx / 2) {
+          if (e.changedTouches[0].clientX < this.props.fw / 2) {
             left = this.props.minLeft;
           } else {
-            left = this.props.fx - dw - this.props.minRight;
+            left = this.props.fw - dw - this.props.minRight;
           }
         } else if (this.props.isLeft) {
           left = this.props.minLeft;
         } else if (this.props.isRight) {
-          left = this.props.fx - dw - this.props.minRight;
+          left = this.props.fw - dw - this.props.minRight;
         }
         // 上下判断
         if (this.props.isTop && this.props.isBottom) {
           // 上下就判断当前倾向哪边
-          if (e.changedTouches[0].clientY < this.props.fy / 2) {
+          if (e.changedTouches[0].clientY < this.props.fh / 2) {
             top = this.props.minTop;
           } else {
-            top = this.props.fy - dh - this.props.minBottom;
+            top = this.props.fh - dh - this.props.minBottom;
           }
         } else if (this.props.isTop) {
           top = this.props.minTop;
         } else if (this.props.isBottom) {
-          top = this.props.fy - dh - this.props.minBottom;
+          top = this.props.fh - dh - this.props.minBottom;
         }
       }
       index.style.left = left + 'px';
@@ -157,7 +265,7 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
       if (this.props.scrollBox) {
         this.props.scrollBox.style.overflowY = 'scroll'; //针对本项目，在移动盒子结束的时候恢复容器滚动
       }
-      console.log('MoveBox touchend');
+      // console.log('MoveBox touchend');
     });
   };
 
@@ -172,7 +280,6 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
     return (
       <div
         id={`moveBox-${this.props.id}`}
-        onClick={this.props.onClick}
         style={{
           ...this.props.style,
           position: 'absolute',
@@ -182,20 +289,6 @@ class MoveBox extends React.Component<IProps & typeof defaultProps> {
           right: `${this.props.right}`,
         }}
       >
-        <span
-          style={{
-            display: this.props.cancel ? 'block' : 'none',
-            position: 'absolute',
-            width: '5px',
-            height: '5px',
-            borderRadius: '2.5px',
-            background: '#ccc',
-            fontSize: '10px',
-          }}
-          onClick={this.cancel}
-        >
-          x
-        </span>
         {this.props.children}
       </div>
     );

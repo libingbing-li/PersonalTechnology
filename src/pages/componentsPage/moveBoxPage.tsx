@@ -22,31 +22,122 @@ const data: Array<any> = [
     default: '-',
   },
   {
-    key: '2',
-    parameter: 'returnTime（必须）',
-    description: '获取组件返回的年月日',
-    type: '(year: number, month: number, date: number) => void',
+    key: '18',
+    parameter: 'children',
+    description: '组件包裹元素',
+    type: 'ReactNode | undefined',
     default: '-',
+  },
+  {
+    key: '2',
+    parameter: 'scrollBox',
+    description:
+      '可能存在的滚动的父盒子，当存在时，拖动组件会设置父盒子不可滚动',
+    type: 'ReactNode | null',
+    default: 'null',
   },
   {
     key: '3',
     parameter: 'style',
-    description: '组件样式',
+    description: '样式',
     type: 'object',
     default: '{}',
   },
   {
     key: '4',
-    parameter: 'type',
-    description: '组件的类型。1：选择月份  2：选择日期',
+    parameter: 'fw',
+    description: '父元素宽度',
     type: 'number',
-    default: '1',
+    default: 'document.body.clientWidth',
   },
   {
     key: '5',
-    parameter: 'time',
-    description:
-      '输入Date.getTime()得到的毫秒数，可以设定组件起始时间。为0时获取当前日期作为组件起始时间。',
+    parameter: 'fh',
+    description: '父元素高度',
+    type: 'number',
+    default: 'document.body.clientHeight',
+  },
+  {
+    key: '6',
+    parameter: 'top',
+    description: 'css属性top值',
+    type: 'string',
+    default: '0px',
+  },
+  {
+    key: '7',
+    parameter: 'left',
+    description: 'css属性left值',
+    type: 'string',
+    default: '0px',
+  },
+  {
+    key: '8',
+    parameter: 'bottom',
+    description: 'css属性bottom值',
+    type: 'string',
+    default: 'auto',
+  },
+  {
+    key: '9',
+    parameter: 'right',
+    description: 'css属性right值',
+    type: 'string',
+    default: 'auto',
+  },
+  {
+    key: '10',
+    parameter: 'isTop',
+    description: '是否贴边-top',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    key: '11',
+    parameter: 'isBottom',
+    description: '是否贴边-bottom',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    key: '12',
+    parameter: 'isLeft',
+    description: '是否贴边-left',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    key: '13',
+    parameter: 'isRight',
+    description: '是否贴边-right',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    key: '14',
+    parameter: 'minTop',
+    description: '移动时距离边框的边距-top',
+    type: 'number',
+    default: '0',
+  },
+  {
+    key: '15',
+    parameter: 'minBottom',
+    description: '移动时距离边框的边距-bottom',
+    type: 'number',
+    default: '0',
+  },
+  {
+    key: '16',
+    parameter: 'minLeft',
+    description: '移动时距离边框的边距-left',
+    type: 'number',
+    default: '0',
+  },
+  {
+    key: '17',
+    parameter: 'minRight',
+    description: '移动时距离边框的边距-right',
     type: 'number',
     default: '0',
   },
@@ -64,7 +155,11 @@ class Demo extends React.Component<DIProsp> {
     return (
       <div className={styles.demo}>
         <div className={styles.title}>{this.props.title}</div>
-        <div className={styles.main} style={{ height: '300px' }}>
+        <div
+          id="moveBoxPageDemo"
+          className={styles.main}
+          style={{ height: '300px' }}
+        >
           <MoveBox
             style={{
               width: '30px',
@@ -73,6 +168,8 @@ class Demo extends React.Component<DIProsp> {
               border: 'solid',
             }}
             id="moveBoxPage"
+            fw={document.querySelector('#moveBoxPageDemo')?.clientWidth}
+            fh={document.querySelector('#moveBoxPageDemo')?.clientHeight}
             scrollBox={document.querySelector('#componentsPageMain')}
           />
         </div>
@@ -84,22 +181,18 @@ class Demo extends React.Component<DIProsp> {
 class MoveBoxPage extends React.Component {
   render = () => {
     return (
-      <div id="dateSelectPage">
+      <div id="moveBoxPage">
         <Title>
-          DateSelect 日期选择
+          MoveBox 移动盒子
           <Tooltip title="点击跳转到github">
             <CodeOutlined style={{ marginLeft: '15px' }} />
           </Tooltip>
         </Title>
-        <Paragraph>选择日期的控件。</Paragraph>
         <Paragraph>
-          <ul>
-            <li>左右切换日期</li>
-            <li>点击标题显示更多可选日期</li>
-          </ul>
+          可在屏幕上随意移动的盒子，可以在其中包裹自定义元素。
         </Paragraph>
         <Title level={2}>演示</Title>
-        <Demo title="月份选择" />
+        <Demo title="移动盒子" />
         <Title level={2}>API</Title>
         <Table
           scroll={{
