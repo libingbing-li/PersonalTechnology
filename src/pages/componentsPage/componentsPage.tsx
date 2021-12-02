@@ -44,6 +44,12 @@ class Components extends React.Component {
             >
               移动盒子
             </Menu.Item>
+            <Menu.Item
+              key="slidebox"
+              onClick={() => history.push('/componentsPage/slideBoxPage')}
+            >
+              滑动盒子
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content className={styles.main} id="componentsPageMain">

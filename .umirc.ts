@@ -29,6 +29,10 @@ export default defineConfig({
               path: '/componentsPage/moveBoxPage',
               component: '@/pages/componentsPage/moveBoxPage.tsx',
             },
+            {
+              path: '/componentsPage/slideBoxPage',
+              component: '@/pages/componentsPage/slideBoxPage.tsx',
+            },
           ],
         },
       ],

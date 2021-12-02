@@ -2,7 +2,6 @@ import React from 'react';
 
 const defaultProps = {
   style: {},
-  scrollBox: null,
   fw: document.body.clientWidth,
   fh: document.body.clientHeight,
   top: '0px',
