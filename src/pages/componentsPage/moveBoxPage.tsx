@@ -33,8 +33,8 @@ const data: Array<any> = [
     parameter: 'scrollBox',
     description:
       '可能存在的滚动的父盒子，当存在时，拖动组件会设置父盒子不可滚动',
-    type: 'ReactNode | null',
-    default: 'null',
+    type: 'ReactNode | undefined',
+    default: 'undefined',
   },
   {
     key: '3',

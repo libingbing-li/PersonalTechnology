@@ -19,13 +19,7 @@ const defaultProps = {
 interface IProps {
   id: string;
   scrollBox?: any;
-  // style: object;
-  // slideLeft?: (e?: any, payload?: any) => void;
-  // slideRight?: (e?: any, payload?: any) => void;
-  // slideTop?: (e?: any, payload?: any) => void;
-  // slideBottom?: (e?: any, payload?: any) => void;
   payload?: any; //传递过来的需要在slide函数中使用的参数
-  // slideDistance: number; //滑动事件判定距离
 }
 
 // type IProps = {
