@@ -28,8 +28,17 @@ class Index extends React.Component {
               key="components"
               onClick={() => history.push('/componentsPage')}
             >
-              组件
+              各类组件
             </Menu.Item>
+            <Menu.Item key="js" onClick={() => history.push('/jsPage')}>
+              JS代码
+            </Menu.Item>
+            {/* <Menu.Item
+              key="css"
+              onClick={() => history.push('/componentsPage')}
+            >
+              css
+            </Menu.Item> */}
           </Menu>
           <div className={styles.git}>
             <Tooltip title="个人技术网站github">

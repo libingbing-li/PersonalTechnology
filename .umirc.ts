@@ -35,6 +35,16 @@ export default defineConfig({
             },
           ],
         },
+        {
+          path: '/jsPage',
+          component: '@/pages/jsPage/jsPage',
+          routes: [
+            {
+              path: '/jsPage/backAlertPage',
+              component: '@/pages/jsPage/backAlertPage.tsx',
+            },
+          ],
+        },
       ],
     },
   ],

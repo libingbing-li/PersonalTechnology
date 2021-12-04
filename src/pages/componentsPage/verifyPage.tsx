@@ -148,7 +148,7 @@ class VerifyPage extends React.Component {
         <Paragraph>
           <ul>
             <li>验证码验证</li>
-            {/* <li>点击顺序字符验证</li> */}
+            <li>拼图验证</li>
           </ul>
         </Paragraph>
         <Title level={2}>演示</Title>
