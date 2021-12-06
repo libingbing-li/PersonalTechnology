@@ -43,6 +43,10 @@ export default defineConfig({
               path: '/jsPage/backAlertPage',
               component: '@/pages/jsPage/backAlertPage.tsx',
             },
+            {
+              path: '/jsPage/qrlinkPage',
+              component: '@/pages/jsPage/qrlinkPage.tsx',
+            },
           ],
         },
       ],

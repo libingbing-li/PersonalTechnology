@@ -26,6 +26,12 @@ class JsPage extends React.Component {
             >
               后退拦截
             </Menu.Item>
+            <Menu.Item
+              key="qrlink"
+              onClick={() => history.push('/jsPage/qrlinkPage')}
+            >
+              二维码跳转
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content className={styles.main}>{this.props.children}</Content>

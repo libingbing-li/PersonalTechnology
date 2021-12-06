@@ -32,7 +32,7 @@ class BackAlertPage extends React.Component {
 
   render = () => {
     return (
-      <div id="VerifyPage">
+      <div id="BackAlertPage">
         <Title>
           后退警告
           <Tooltip title="点击跳转到github">
