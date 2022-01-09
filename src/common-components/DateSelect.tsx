@@ -24,7 +24,7 @@ type IProps = {
   id: string;
   style: any;
   returnTime: (year: number, month: number, date: number) => void;
-} & Partial<typeof defaultProps>;
+} & Partial<typeof defaultProps>; //对外暴露的参数就是本身（必须属性）和默认值（可选属性
 
 interface IState {
   showStr: string;
@@ -39,7 +39,7 @@ interface IState {
 }
 
 class DateSelect extends React.Component<IProps & typeof defaultProps> {
-  static defaultProps = defaultProps;
+  static defaultProps = defaultProps; //设置默认值
   state: IState = {
     showStr: '',
     selectStr: '',

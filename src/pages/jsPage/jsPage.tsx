@@ -30,7 +30,7 @@ class JsPage extends React.Component {
               key="qrlink"
               onClick={() => history.push('/jsPage/qrlinkPage')}
             >
-              二维码跳转
+              二维码+链接
             </Menu.Item>
           </Menu>
         </Sider>

@@ -121,25 +121,110 @@ class Demo extends React.Component {
 }
 
 class QRLinkPage extends React.Component {
+  componentDidMount = () => {
+    //原生半链接跳转 - hash
+    // // 页面加载完不会触发 hashchange，这里主动触发一次 hashchange 事件
+    // window.addEventListener('DOMContentLoaded', onLoad)
+    // 监听hash值的变化
+    window.addEventListener('hashchange', onHashChange);
+    //通过浏览器前进后退改变 URL、通过<a>标签改变 URL、通过window.location改变URL，这几种情况改变 URL 都会触发 hashchange 事件
+
+    // 路由视图
+    var routerView: any = document.querySelector('#routeView');
+
+    // function onLoad() {
+    //   routerView = document.querySelector('#routeView')
+    //   onHashChange()
+    // }
+
+    // 路由变化时，根据路由渲染对应 UI
+    function onHashChange() {
+      switch (location.hash) {
+        case '#/page1':
+          routerView.innerHTML = '跳转到page1页面，观察url后的hash';
+          return;
+        case '#/page2':
+          routerView.innerHTML = '跳转page2';
+          return;
+        default:
+          return;
+      }
+    }
+  };
+
   render = () => {
     return (
       <div id="QRLinkPage">
         <Title>
-          二维码展示+链接跳转
+          二维码+链接
           <Tooltip title="点击跳转到github">
             <CodeOutlined style={{ marginLeft: '15px' }} />
           </Tooltip>
         </Title>
         <Paragraph>
+          前端路由就是【浏览器地址栏中的url和所见网页的对应关系】
+          <br />
+          改变url的方式（均会触发hashChange事件）：
+          <li>浏览器前进后退</li>
+          <li>a标签改变</li>
+          <li>window.location改变</li>
+        </Paragraph>
+        <Paragraph>
           <ul>
             <li>
-              全连接跳转：window.location.href =
+              扫一扫获得结果:先判断是不是应用内半链接,再判断是否是全链接,都不是则视作文本
+            </li>
+            <li>
+              {`if(url?.indexOf('http://') > -1 || url?.indexOf('https://') > -1)`}
+            </li>
+            <li>
+              全连接跳转（网址可以作为url参数传递）:window.location.href =
               'https://你的url'（在移动端跳转到默认浏览器打开页面）
             </li>
             <li>iframe标签，参数为需要跳转的链接。</li>
-            <li>二维码展示</li>
+            <li>
+              半链接跳转：1.框架中有直接跳转的方法，如umi的history.push()。 2.
+              原生半链接跳转，原生js没有具体跳转的方法，需要进行处理
+            </li>
           </ul>
         </Paragraph>
+        <Title level={2}>
+          原生路由切换-url变化引起ui更新而不刷新页面
+          <Tooltip title="点击跳转到CSDN教程">
+            <a
+              target="_blank"
+              href="https://blog.csdn.net/mfwscq/article/details/90256807"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
+          </Tooltip>
+        </Title>
+        <Paragraph>
+          前端路由切换有两种方式：基于hash + hashChange、history.pushState() +
+          popState 事件完成。
+          <br />
+          实现前端路由的核心：
+          <ul>
+            <li>改变url且不引起页面的刷新</li>
+            <li>检测到url的变化</li>
+          </ul>
+        </Paragraph>
+        <Title level={3}>使用hash原生切换路由</Title>
+        <Paragraph>
+          hash模式是一种把前端路由的路径用井字符号#拼接在真实url后面的模式。特征为：
+          <li>url中hash值的变化并不会重新加载页面。</li>
+          <li>
+            hash值的改变，都会在浏览器的访问历史中增加一个记录，可以通过浏览器的回退前进按钮控制hash值的切换。
+          </li>
+          <li>
+            可以通过hashChange事件，监听到hash值的变化，从而响应不同路径的逻辑处理。
+          </li>
+          <br />
+          hash模式的思路就是当url改变，检测hashChange事件，然后js进行对应操作
+        </Paragraph>
+        {/* hash html代码 */}
+        <a href="#/page1">page1</a> <a href="#/page2">page2</a>
+        <div id="routeView">还未使用hash模式原生切换路由</div>
         <Title level={2}>演示</Title>
         <Demo />
       </div>
