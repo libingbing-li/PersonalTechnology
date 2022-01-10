@@ -122,6 +122,11 @@ class Demo extends React.Component {
 
 class QRLinkPage extends React.Component {
   componentDidMount = () => {
+    this.hashRoute();
+    this.historyRoute();
+  };
+
+  hashRoute = () => {
     //原生半链接跳转 - hash
     // // 页面加载完不会触发 hashchange，这里主动触发一次 hashchange 事件
     // window.addEventListener('DOMContentLoaded', onLoad)
@@ -151,6 +156,46 @@ class QRLinkPage extends React.Component {
       }
     }
   };
+  historyRoute = () => {
+    //原生半链接跳转 - hash
+    // // 页面加载完不会触发 hashchange，这里主动触发一次 hashchange 事件
+    // window.addEventListener('DOMContentLoaded', onLoad)
+    // 监听hash值的变化
+    window.addEventListener('popstate', onPopState);
+    //通过浏览器前进后退改变 URL、通过<a>标签改变 URL、通过window.location改变URL，这几种情况改变 URL 都会触发 hashchange 事件
+
+    // 路由视图
+    var routerViewHistory: any = document.querySelector('#routeViewHistory');
+
+    // function onLoad() {
+    //   routerView = document.querySelector('#routeView')
+    //   onHashChange()
+    // }
+    // 拦截 <a> 标签点击事件默认行为， 点击时使用 pushState 修改 URL并更新手动 UI，从而实现点击链接更新 URL 和 UI 的效果。
+    // var linkList = document.querySelectorAll('a[href]')
+    var linkList = document.querySelectorAll('a.link');
+    linkList.forEach((el) =>
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        history.pushState(null, '', el.getAttribute('href'));
+        onPopState();
+      }),
+    );
+
+    // 路由变化时，根据路由渲染对应 UI
+    function onPopState() {
+      switch (location.pathname) {
+        case '/page3':
+          routerViewHistory.innerHTML = '跳转到page3页面，观察pathname';
+          return;
+        case '/page4':
+          routerViewHistory.innerHTML = '跳转page4';
+          return;
+        default:
+          return;
+      }
+    }
+  };
 
   render = () => {
     return (
@@ -166,7 +211,7 @@ class QRLinkPage extends React.Component {
           <br />
           改变url的方式（均会触发hashChange事件）：
           <li>浏览器前进后退</li>
-          <li>a标签改变</li>
+          <li>a标签改变（不会触发popstate事件</li>
           <li>window.location改变</li>
         </Paragraph>
         <Paragraph>
@@ -188,17 +233,16 @@ class QRLinkPage extends React.Component {
             </li>
           </ul>
         </Paragraph>
-        <Title level={2}>
-          原生路由切换-url变化引起ui更新而不刷新页面
-          <Tooltip title="点击跳转到CSDN教程">
-            <a
-              target="_blank"
-              href="https://blog.csdn.net/mfwscq/article/details/90256807"
-            >
-              <CodeOutlined style={{ marginLeft: '15px' }} />
-            </a>
-          </Tooltip>
-        </Title>
+        <Title level={2}>原生路由切换-url变化引起ui更新而不刷新页面</Title>
+        <a
+          target="_blank"
+          href="https://blog.csdn.net/mfwscq/article/details/90256807"
+        >
+          csdn基础教程
+        </a>
+        <a target="_blank" href="https://zhuanlan.zhihu.com/p/130995492">
+          知乎一个更高级更广泛应用的教程
+        </a>
         <Paragraph>
           前端路由切换有两种方式：基于hash + hashChange、history.pushState() +
           popState 事件完成。
@@ -225,6 +269,38 @@ class QRLinkPage extends React.Component {
         {/* hash html代码 */}
         <a href="#/page1">page1</a> <a href="#/page2">page2</a>
         <div id="routeView">还未使用hash模式原生切换路由</div>
+        <Title level={3}>使用history原生切换路由</Title>
+        <a
+          target="_blank"
+          href="https://developer.mozilla.org/zh-CN/docs/Web/API/History_API"
+        >
+          History API -MDN
+        </a>
+        <Paragraph>
+          pushState：增加一条新的历史记录 replaceState：替换当前的历史记录
+          <li>
+            HTML5引入了history.pushState和history.replaceState两个方法，可以改变url的path部分而不引起刷新。
+          </li>
+          popstate事件：
+          <li>
+            当活动历史记录条目更改时，将触发popstate事件。[...]
+            popstate事件仅通过执行浏览器操作（例如单击后退按钮（或在JavaScript中调用history.back()、history.forward()、history.go()来触发
+          </li>
+          <Text code>
+            window.history.pushState(null, null, "http://www.baidu.com")
+          </Text>
+          history和hash不同在于popstate事件在a标签点击中无法触发，所以要手动拦截并调用popstate函数。
+          <br />
+          {/* history html代码 */}
+          <a href="/page3" className="link">
+            page3
+          </a>{' '}
+          <a href="/page4" className="link">
+            page4
+          </a>
+          <div id="routeViewHistory">还未使用history原生切换路由</div>
+        </Paragraph>
+        {/* history html代码 */}
         <Title level={2}>演示</Title>
         <Demo />
       </div>
