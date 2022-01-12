@@ -32,6 +32,12 @@ class JsPage extends React.Component {
             >
               二维码+链接
             </Menu.Item>
+            <Menu.Item
+              key="messages"
+              onClick={() => history.push('/jsPage/messagesPage')}
+            >
+              消息流
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content className={styles.main}>{this.props.children}</Content>

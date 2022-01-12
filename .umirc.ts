@@ -47,6 +47,10 @@ export default defineConfig({
               path: '/jsPage/qrlinkPage',
               component: '@/pages/jsPage/qrlinkPage.tsx',
             },
+            {
+              path: '/jsPage/messagesPage',
+              component: '@/pages/jsPage/messagesPage.tsx',
+            },
           ],
         },
       ],
