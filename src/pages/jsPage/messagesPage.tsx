@@ -9,7 +9,7 @@ import VerifyImage from '@/common-components/VerifyImage';
 import { check } from 'prettier';
 
 const { Header, Content, Sider } = Layout;
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const msgData = [
   {
@@ -33,11 +33,11 @@ const msgData = [
     msgT: 'Hello, how are you today?',
   },
   {
-    msg: '今天我在晚上写代码，还不错。',
+    msg: "今天我在晚上写<span style='color: #1F90E6 !important'>代码</span>，还不错。",
     msgT: "Today I'm coding at night and it's not bad.",
   },
   {
-    msg: '那太好了，你喜欢代码吗？',
+    msg: "那太好了，你喜欢<span style='color: #1F90E6 !important'>代码</span>吗？",
     msgT: "That's great, do you like code?",
   },
   {
@@ -65,20 +65,35 @@ class Demo extends React.Component {
   render() {
     return (
       <div className={styles.demo}>
-        <div className={styles.title}>
-          {/* <Tooltip title="点击跳转到简书教程">
-              <a target="_blank" href="https://www.jianshu.com/p/92d5a778d964">
-                <CodeOutlined style={{ marginLeft: '15px' }} />
-              </a>
-            </Tooltip> */}
+        <div className={styles.title}>消息流翻译+高亮文字</div>
+        <div className={styles.description}>
+          翻译思路：
+          <br />
+          <li>
+            通过控制提前设置好的翻译div的display来达成，设置innerText属性而不是innerHTML，因为innerHTML会将给予的字符串强制转为小写。
+          </li>
+          高亮文字思路：
+          <br />
+          <li>dangerouslySetInnerHTML是React标签的一个属性</li>
+          <Text code>{'dangerouslySetInnerHTML={{ __html: htmlStr }}'}</Text>
+          <br />
+          <Text code>
+            {"// htmlStr: <span style='color: #1F90E6 !important'>A</span>78"}
+          </Text>
+          <li>
+            需要注意的是，__html的值必须是确认净化的数据，否则可能遭受XXS攻击（在html页面注入恶意代码
+          </li>
+          <a
+            target="_blank"
+            href="https://blog.csdn.net/yefan2222/article/details/7091863"
+          >
+            XXS攻击
+          </a>
         </div>
-        <div className={styles.description}></div>
         <div
           className={styles.main}
           style={{
-            height: '300px',
             flexDirection: 'column',
-            overflowY: 'scroll',
           }}
         >
           {/*  */}
@@ -88,7 +103,7 @@ class Demo extends React.Component {
                 <div
                   className={index % 2 === 0 ? style.msgText : style.msgTextMe}
                 >
-                  {msg.msg}
+                  <span dangerouslySetInnerHTML={{ __html: msg.msg }}></span>
                   <div
                     className={style.msgBtn}
                     onClick={() => this.translateMsg(index)}
@@ -111,25 +126,6 @@ class Demo extends React.Component {
 }
 
 class MessagesPage extends React.Component {
-  componentDidMount = () => {
-    //刚刚进入A
-    window.history.pushState(null, '', window.location.href);
-    window.addEventListener('popstate', this.intercept);
-  };
-  // 拦截回退事件
-  intercept = () => {
-    console.log('jsPage-back-intercept');
-    // if (...) {
-    //   // ... 要做的其他操作
-    // } else {
-    //   // 手动返回
-    // window.history.back();
-    // 这里不可以直接back，会出bug，是因为jsPage页面会跳到本页面，造成循环bug
-    // }
-    // 移除事件
-    window.removeEventListener('popstate', this.intercept);
-  };
-
   render = () => {
     return (
       <div id="BackAlertPage">
@@ -147,33 +143,10 @@ class MessagesPage extends React.Component {
         </Paragraph>
         <Title level={2}>演示</Title>
         <Demo />
-        <Title level={2}>思路</Title>
-        <Paragraph>
-          在由B页面进入A页面时添加一层历史记录，此时历史记录为B-A-A。
-          <br />
-          当用户强制后退时,由A退到A，此时历史记录为B-A，同时弹出弹窗询问是否确认后退，如果确认，执行js代码后退到页面B，如果不后退，再添加一层历史记录，历史记录为：B-A-A，那么当用户强制后退时，就会出现之前的情况。
-          <br />
-          在用户层面的表现：后退，弹出警告，取消，再次后退，再次弹出警告，确认后退，后退到B。
-        </Paragraph>
         <Title level={2}>BUG</Title>
         <Paragraph>
-          ios，一个使用了react-route的项目，部分无法使用本方法进行后退拦截：
-          <ol>
-            <li>
-              在ios中, 只有部分页面(一级跳二级)出现了该bug,
-              而二级跳三级则没有问题,排除了window.history.back出问题的可能性.
-            </li>
-            <li>
-              接着,对跳转方式进行排查,由于该项目技术使用了react-route,对此不熟悉,所以没能及时确定.但对某个方式进行了二级到三级的替换,bug仍然存在,排除跳转方式出错
-            </li>
-            <li>
-              到了历史记录,app.info历史记录后发现ios比安卓少一层,
-              <b>故而跳二级页面后只有该二级页面一个历史记录</b>
-              ,尚未找到bug出现原因,但找到了解决办法
-            </li>
-          </ol>
-          解决：
-          <li>初始化时判断机型是否是ios, 是的话就加一层index的历史记录。</li>
+          在一个react项目中，无法直接 div.style.display='none';
+          使用了Object.assign函数来进行样式的修改，不清楚原因。
         </Paragraph>
       </div>
     );

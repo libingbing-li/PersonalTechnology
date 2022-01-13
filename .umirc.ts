@@ -53,6 +53,16 @@ export default defineConfig({
             },
           ],
         },
+        {
+          path: '/browserPage',
+          component: '@/pages/browserPage/browserPage',
+          routes: [
+            {
+              path: '/browserPage/HWPage',
+              component: '@/pages/browserPage/HWPage.tsx',
+            },
+          ],
+        },
       ],
     },
   ],
