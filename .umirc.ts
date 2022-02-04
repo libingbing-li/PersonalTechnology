@@ -51,6 +51,10 @@ export default defineConfig({
               path: '/jsPage/messagesPage',
               component: '@/pages/jsPage/messagesPage.tsx',
             },
+            {
+              path: '/jsPage/DTPage',
+              component: '@/pages/jsPage/DTPage.tsx',
+            },
           ],
         },
         {

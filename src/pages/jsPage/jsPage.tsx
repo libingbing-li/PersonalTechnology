@@ -38,6 +38,12 @@ class JsPage extends React.Component {
             >
               消息流
             </Menu.Item>
+            <Menu.Item
+              key="DTPage"
+              onClick={() => history.push('/jsPage/DTPage')}
+            >
+              防抖节流
+            </Menu.Item>
           </Menu>
         </Sider>
         <Content className={styles.main}>{this.props.children}</Content>
