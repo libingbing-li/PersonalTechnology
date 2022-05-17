@@ -132,7 +132,9 @@ class MessagesPage extends React.Component {
         <Title>
           消息流相关
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }} />
+            <CodeOutlined style={{ marginLeft: '15px' }}>
+              <a href=""></a>
+            </CodeOutlined>
           </Tooltip>
         </Title>
         <Paragraph>

@@ -185,7 +185,9 @@ class MoveBoxPage extends React.Component {
         <Title>
           MoveBox 移动盒子
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }} />
+            <CodeOutlined style={{ marginLeft: '15px' }}>
+              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/MoveBox.tsx"></a>
+            </CodeOutlined>
           </Tooltip>
         </Title>
         <Paragraph>

@@ -203,7 +203,9 @@ class QRLinkPage extends React.Component {
         <Title>
           二维码+链接
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }} />
+            <CodeOutlined style={{ marginLeft: '15px' }}>
+              <a href=""></a>
+            </CodeOutlined>
           </Tooltip>
         </Title>
         <Paragraph>
