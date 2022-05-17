@@ -236,9 +236,12 @@ class SlideBoxPage extends React.Component {
         <Title>
           SlideBox 滑动盒子
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/SlideBox.tsx"></a>
-            </CodeOutlined>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/SlideBox.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
           </Tooltip>
         </Title>
         <Paragraph>检测用户上下左右滑动行为并调用对应函数。</Paragraph>

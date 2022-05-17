@@ -169,9 +169,9 @@ class DTPage extends React.Component {
         <Title>
           防抖(Debouncing) + 节流(Throtting)
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href=""></a>
-            </CodeOutlined>
+            <a target="_blank" href="">
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
           </Tooltip>
         </Title>
         <Paragraph>

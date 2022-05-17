@@ -88,9 +88,12 @@ class DateSelectPage extends React.Component {
         <Title>
           DateSelect 日期选择
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/DateSelect.tsx"></a>
-            </CodeOutlined>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/DateSelect.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
           </Tooltip>
         </Title>
         <Paragraph>选择日期的控件。</Paragraph>

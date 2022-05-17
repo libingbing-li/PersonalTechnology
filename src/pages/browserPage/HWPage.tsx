@@ -310,11 +310,17 @@ class HWPage extends React.Component {
 
         <Paragraph>
           <Tooltip title="点击跳转到MDN">
-            <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Element">
+            <a
+              target="_blank"
+              href="https://developer.mozilla.org/zh-CN/docs/Web/API/Element"
+            >
               Element
             </a>
             <br />
-            <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent">
+            <a
+              target="_blank"
+              href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent"
+            >
               MouseEvent
             </a>
           </Tooltip>

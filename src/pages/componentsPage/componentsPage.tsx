@@ -6,15 +6,41 @@ import { PROPERTY_TYPES } from '@babel/types';
 
 const { Header, Content, Sider } = Layout;
 
+interface IState {
+  collapsed: boolean;
+}
 class Components extends React.Component {
+  state: IState = {
+    collapsed: true,
+  };
   componentDidMount = () => {
     history.push('/componentsPage/dateSelectPage');
+  };
+
+  go = (url: string) => {
+    history.push(url);
+    this.setState({
+      collapsed: true,
+    });
+  };
+  tigger = () => {
+    this.setState((preState: IState) => {
+      return {
+        collapsed: !preState.collapsed,
+      };
+    });
   };
 
   render = () => {
     return (
       <Layout className={styles.body} id="components">
-        <Sider className={styles.sider} breakpoint="md" collapsedWidth={0}>
+        <Sider
+          collapsed={this.state.collapsed}
+          onCollapse={this.tigger}
+          className={styles.sider}
+          breakpoint="md"
+          collapsedWidth={0}
+        >
           <Menu
             className={styles.smenu}
             mode="inline"
@@ -22,31 +48,31 @@ class Components extends React.Component {
           >
             <Menu.Item
               key="dateSelect"
-              onClick={() => history.push('/componentsPage/dateSelectPage')}
+              onClick={() => this.go('/componentsPage/dateSelectPage')}
             >
               日期选择
             </Menu.Item>
             <Menu.Item
               key="confirm"
-              onClick={() => history.push('/componentsPage/confirmPage')}
+              onClick={() => this.go('/componentsPage/confirmPage')}
             >
               选择弹出框
             </Menu.Item>
             <Menu.Item
               key="loginVerify"
-              onClick={() => history.push('/componentsPage/verifyPage')}
+              onClick={() => this.go('/componentsPage/verifyPage')}
             >
               登录验证
             </Menu.Item>
             <Menu.Item
               key="movebox"
-              onClick={() => history.push('/componentsPage/moveBoxPage')}
+              onClick={() => this.go('/componentsPage/moveBoxPage')}
             >
               移动盒子
             </Menu.Item>
             <Menu.Item
               key="slidebox"
-              onClick={() => history.push('/componentsPage/slideBoxPage')}
+              onClick={() => this.go('/componentsPage/slideBoxPage')}
             >
               滑动盒子
             </Menu.Item>

@@ -160,12 +160,18 @@ class ConfirmPage extends React.Component {
         <Title>
           Confirm 弹出选择框
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/Confirm.tsx"></a>
-            </CodeOutlined>
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/ConfirmBtn.tsx"></a>
-            </CodeOutlined>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/Confirm.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/ConfirmBtn.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }}></CodeOutlined>
+            </a>
           </Tooltip>
         </Title>
         <Paragraph>用于确认用户操作的选择框</Paragraph>

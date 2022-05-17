@@ -141,12 +141,18 @@ class VerifyPage extends React.Component {
         <Title>
           Verify 安全验证
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/VerifyCode.tsx"></a>
-            </CodeOutlined>
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/VerifyImage.tsx"></a>
-            </CodeOutlined>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/VerifyCode.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
+            <a
+              target="_blank"
+              href="https://github.com/libingbing-li/PersonalTechnology/blob/master/src/common-components/VerifyImage.tsx"
+            >
+              <CodeOutlined style={{ marginLeft: '15px' }} />
+            </a>
           </Tooltip>
         </Title>
         <Paragraph>用于安全验证的组件</Paragraph>

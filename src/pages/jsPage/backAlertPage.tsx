@@ -36,9 +36,7 @@ class BackAlertPage extends React.Component {
         <Title>
           后退警告
           <Tooltip title="点击跳转到github">
-            <CodeOutlined style={{ marginLeft: '15px' }}>
-              <a href=""></a>
-            </CodeOutlined>
+            <a target="_blank" href=""></a>
           </Tooltip>
         </Title>
         <Paragraph>
