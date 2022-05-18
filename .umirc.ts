@@ -72,4 +72,11 @@ export default defineConfig({
   ],
   fastRefresh: {},
   mfsu: {},
+  // build
+  // history: {
+  //   type: 'hash'
+  // },
+  // base: './',
+  // publicPath: './',
+  // hash: true,
 });
