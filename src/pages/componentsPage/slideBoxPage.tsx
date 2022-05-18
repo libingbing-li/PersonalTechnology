@@ -102,6 +102,7 @@ class Demo extends React.Component<DIProsp> {
     bottom: 0,
   };
   slideLeft = () => {
+    console.log('slideLeft');
     if (this.state.page === 1) return;
     this.setState((state: DIState) => {
       return {
@@ -110,6 +111,7 @@ class Demo extends React.Component<DIProsp> {
     });
   };
   slideRight = () => {
+    console.log('slideRight');
     if (this.state.page === 3) return;
     this.setState((state: DIState) => {
       return {
@@ -118,6 +120,7 @@ class Demo extends React.Component<DIProsp> {
     });
   };
   slideBottom = () => {
+    console.log('slideBottom');
     this.setState({
       top: 1,
     });
@@ -128,6 +131,7 @@ class Demo extends React.Component<DIProsp> {
     }, 500);
   };
   slideTop = () => {
+    console.log('slideTop');
     this.setState({
       bottom: 1,
     });
@@ -166,6 +170,7 @@ class Demo extends React.Component<DIProsp> {
                 position: 'absolute',
                 top: '0px',
                 left: `${200 - this.state.page * 200}px`,
+                userSelect: 'none',
               }}
             >
               page1
@@ -179,6 +184,7 @@ class Demo extends React.Component<DIProsp> {
                 position: 'absolute',
                 top: '0px',
                 left: `${400 - this.state.page * 200}px`,
+                userSelect: 'none',
               }}
             >
               page2
@@ -192,6 +198,7 @@ class Demo extends React.Component<DIProsp> {
                 position: 'absolute',
                 top: '0px',
                 left: `${600 - this.state.page * 200}px`,
+                userSelect: 'none',
               }}
             >
               page3
@@ -205,6 +212,7 @@ class Demo extends React.Component<DIProsp> {
                 position: 'absolute',
                 top: `${this.state.top * 100 - 100}px`,
                 left: '0px',
+                userSelect: 'none',
               }}
             >
               top
@@ -218,6 +226,7 @@ class Demo extends React.Component<DIProsp> {
                 position: 'absolute',
                 bottom: `${this.state.bottom * 100 - 100}px`,
                 left: '0px',
+                userSelect: 'none',
               }}
             >
               bottom
