@@ -126,7 +126,9 @@ class Demo extends React.Component {
   render() {
     return (
       <div className={styles.demo}>
-        <div className={styles.title}>显示调用滚动事件的函数次数</div>
+        <div className={styles.title}>
+          显示在下方空白区域调用滚动事件的函数次数
+        </div>
         <div className={styles.description}>
           <button onClick={this.restart}>重新开始</button>
           <br />
@@ -179,14 +181,6 @@ class DTPage extends React.Component {
         </Paragraph>
         <Title level={2}>演示</Title>
         <Demo />
-        <Title level={2}>思路</Title>
-        <Paragraph>
-          在由B页面进入A页面时添加一层历史记录，此时历史记录为B-A-A。
-          <br />
-          当用户强制后退时,由A退到A，此时历史记录为B-A，同时弹出弹窗询问是否确认后退，如果确认，执行js代码后退到页面B，如果不后退，再添加一层历史记录，历史记录为：B-A-A，那么当用户强制后退时，就会出现之前的情况。
-          <br />
-          在用户层面的表现：后退，弹出警告，取消，再次后退，再次弹出警告，确认后退，后退到B。
-        </Paragraph>
       </div>
     );
   };

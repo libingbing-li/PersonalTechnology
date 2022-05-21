@@ -82,7 +82,7 @@ class Demo extends React.Component {
                     </a> */}
           </div>
         </div>
-        <div className={styles.demo}>
+        {/* <div className={styles.demo}>
           <div className={styles.title}>
             js生成二维码-QRCode.js
             <Tooltip title="点击跳转到简书教程">
@@ -90,31 +90,31 @@ class Demo extends React.Component {
                 <CodeOutlined style={{ marginLeft: '15px' }} />
               </a>
             </Tooltip>
-            {/* <Tooltip title="点击跳转到npm文档">
+            {<Tooltip title="点击跳转到npm文档">
                         <a target='_blank' href="https://www.npmjs.com/package/qrcode.react">
                             <CodeOutlined style={{ marginLeft: '5px' }} />
                         </a>
-                    </Tooltip> */}
+                    </Tooltip> } 
           </div>
           暂不实现
-        </div>
-        <div className={styles.demo}>
+        </div> */}
+        {/* <div className={styles.demo}>
           <div className={styles.title}>
             iframe展示百度搜索网站
-            {/* <Tooltip title="点击跳转到简书教程">
+            <Tooltip title="点击跳转到简书教程">
                         <a target='_blank' href="https://www.jianshu.com/p/ef2aabb8a5ac">
                             <CodeOutlined style={{ marginLeft: '15px' }} />
                         </a>
-                    </Tooltip> */}
-            {/* <Tooltip title="点击跳转到npm文档">
+                    </Tooltip>
+            <Tooltip title="点击跳转到npm文档">
                         <a target='_blank' href="https://www.npmjs.com/package/qrcode.react">
                             <CodeOutlined style={{ marginLeft: '5px' }} />
                         </a>
-                    </Tooltip> */}
+                    </Tooltip>
           </div>
           <div className={styles.description}>存在跨域问题，暂不学习</div>
           <iframe src="https://www.baidu.com/" frameBorder="0"></iframe>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -269,8 +269,8 @@ class QRLinkPage extends React.Component {
           hash模式的思路就是当url改变，检测hashChange事件，然后js进行对应操作
         </Paragraph>
         {/* hash html代码 */}
-        <a href="#/page1">page1</a> <a href="#/page2">page2</a>
-        <div id="routeView">还未使用hash模式原生切换路由</div>
+        {/* <a href="#/page1">page1</a> <a href="#/page2">page2</a>
+        <div id="routeView">还未使用hash模式原生切换路由</div> */}
         <Title level={3}>使用history原生切换路由</Title>
         <a
           target="_blank"

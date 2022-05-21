@@ -145,11 +145,6 @@ class MessagesPage extends React.Component {
         </Paragraph>
         <Title level={2}>演示</Title>
         <Demo />
-        <Title level={2}>BUG</Title>
-        <Paragraph>
-          在一个react项目中，无法直接 div.style.display='none';
-          使用了Object.assign函数来进行样式的修改，不清楚原因。
-        </Paragraph>
       </div>
     );
   };
